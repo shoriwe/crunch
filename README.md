@@ -1,18 +1,18 @@
 # Crunch
 ## Descripcion:
-## Es una script que se utiliza para generar diccionarios especificamente para
-## fuerza bruta, no es 100% versatil pero si sele puede alterar los caracteres
-## que utilizara, el tamano minimo de las palabras, el tamano maximo de las
-## palabras, se puede decidir si almacenar todas las palabras en un diccionario
-## y por ultimo si se quiere realizar cierta funcion la palabra que salga
+ Es una script que se utiliza para generar diccionarios especificamente para
+ fuerza bruta, no es 100% versatil pero si sele puede alterar los caracteres
+ que utilizara, el tamano minimo de las palabras, el tamano maximo de las
+ palabras, se puede decidir si almacenar todas las palabras en un diccionario
+ y por ultimo si se quiere realizar cierta funcion la palabra que salga
 
 # Pre-requisitos
-## Deberia funcionar en cualquier version desde python 3.4 en adelante,
-## para python 2 se deberian revisar el codigo para cambiar alguna parte que le
-## cause problema; no requiere de ninguna libreria externa
+ Deberia funcionar en cualquier version desde python 3.4 en adelante,
+ para python 2 se deberian revisar el codigo para cambiar alguna parte que le
+ cause problema; no requiere de ninguna libreria externa
 
 # Instalacion
-## Copiar la carpeta crunch en su directorio de 'site-packages'
+ Copiar la carpeta crunch en su directorio de 'site-packages'
 
 # Quickstart
 
