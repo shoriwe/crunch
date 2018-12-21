@@ -1,6 +1,5 @@
 from string import ascii_letters, digits, punctuation, whitespace
-
-
+from time import time
 class Crunch:
     def __init__(self, letras=ascii_letters + digits + punctuation + whitespace, remover=''):
         self.letras = letras
@@ -8,18 +7,17 @@ class Crunch:
             self.letras.replace(caracter, '')
         self.tamano = len(self.letras) - 1
 
-    def generar(self, min_l, max_l=None, funcion=print,out_list=True):
+    def generar(self, min_l, max_l=None, funcion=None,out_list=True):
         if max_l == None:
             max_l = min_l
-        if out_list:
-            salida = []
+        salida = []
         for numero in range(min_l, max_l + 1):
             puestos = [0 for x in range(numero)]
             for n in range((self.tamano + 1) ** numero):
                 palabra, puestos = self._crear_palabra(puestos)
                 if out_list:
                     salida.append(palabra)
-                if funcion:
+                if funcion != None:
                     funcion(palabra)
         if out_list:
             return salida
@@ -43,3 +41,7 @@ class Crunch:
         salida = ''.join(self.letras[n] for n in puestos)
         puestos = self._actualizar_puestos(puestos)
         return salida, puestos
+c=Crunch()
+t=time()
+c.generar(1,3)
+print(time()-t)
