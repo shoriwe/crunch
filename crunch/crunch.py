@@ -1,47 +1,48 @@
+# Python 3.7
+
+from itertools import product
 from string import ascii_letters, digits, punctuation, whitespace
-from time import time
+
+reference = ascii_letters + digits + punctuation + whitespace
+
+# Check if the input is iterable or not
+def is_iter(n):
+    try:
+        iter(n)
+        return True
+    except:
+        return False
+
+# Crunch class
+# letters (string) => reference for permutations
+# remove (iterable) => remove it's values from letters
 class Crunch:
-    def __init__(self, letras=ascii_letters + digits + punctuation + whitespace, remover=''):
-        self.letras = letras
-        for caracter in remover:
-            self.letras.replace(caracter, '')
-        self.tamano = len(self.letras) - 1
+    def __init__(self,letters=reference,remove=None):
+        if not is_iter(remove):
+            remove = ''
+        self.letter = ''.join(char for char in letters if char not in remove)
 
-    def generar(self, min_l, max_l=None, funcion=None,out_list=True):
-        if max_l == None:
-            max_l = min_l
-        salida = []
-        for numero in range(min_l, max_l + 1):
-            puestos = [0 for x in range(numero)]
-            for n in range((self.tamano + 1) ** numero):
-                palabra, puestos = self._crear_palabra(puestos)
-                if out_list:
-                    salida.append(palabra)
-                if funcion != None:
-                    funcion(palabra)
-        if out_list:
-            return salida
 
-    def _actualizar_puestos(self, puestos):
-        aumentar = True
-        for n in range(len(puestos)):
-            if puestos[n] <= self.tamano:
-                if aumentar:
-                    puestos[n] += 1
-                    if puestos[n] > self.tamano:
-                        puestos[n] = 0
-                        aumentar = True
-                    else:
-                        aumentar = False
-            else:
-                puestos[n] = 0
-        return puestos
+    # Generate permutation and execute execute a function with it's values
+    def __generate_block(self,lenght, f):
 
-    def _crear_palabra(self, puestos):
-        salida = ''.join(self.letras[n] for n in puestos)
-        puestos = self._actualizar_puestos(puestos)
-        return salida, puestos
-c=Crunch()
-t=time()
-c.generar(1,3)
-print(time()-t)
+        for value in product(reference, repeat=lenght):
+            f(value)
+
+    # Loop that creates a block for each size
+    def __generate(self, min_lenght, max_lenght, f):
+        # number = size of the actual permutation
+        # Example 4 => permutate letters like aaaa aaab aaac aaad ... 9999 ...
+        for number in range(min_lenght, max_lenght+1):
+            self.__generate_block(number, f)
+
+
+    # Note that the function recieve the word generated as a tuple Example: ('a','a','a','a')
+    def generate(self, min_lenght, max_lenght=None, f=None):
+        # When only want to generate in a specific range
+        if not max_lenght:
+            max_lenght = min_lenght
+        # If none function has been entered do nothing with the word generated
+        if not type(f):
+            f = lambda x: None
+        self.__generate(min_lenght, max_lenght, f)

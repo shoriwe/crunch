@@ -1,38 +1,42 @@
 # Crunch
-## Descripcion:
- Es una script que se utiliza para generar diccionarios especificamente para
- fuerza bruta, no es 100% versatil pero si sele puede alterar los caracteres
- que utilizara, el tamano minimo de las palabras, el tamano maximo de las
- palabras, se puede decidir si almacenar todas las palabras en un diccionario
- y por ultimo si se quiere realizar cierta funcion la palabra que salga
+## Description
+Crunch word generator that use itertools to generate wordlist, also can
+receive a function as input to process that word in the running time
 
-# Pre-requisitos
- Deberia funcionar en cualquier version desde python 3.4 en adelante,
- para python 2 se deberian revisar el codigo para cambiar alguna parte que le
- cause problema; no requiere de ninguna libreria externa
-
-# Instalacion
- Copiar la carpeta crunch en su directorio de 'site-packages'
-
-# Quickstart
-
+# Usage
 ```python
 from crunch import Crunch
-tamano_minimo = 2 #Se generaran palabras que tengan al menos 2 caracteres
-tamano_maximo = 3 #Maximo tamano de las palabras generadas
-almacenar = False #Se determina si se quiere que la funcion generar retorne un
-#diccionario
-def f(palabra):
-  '''La funcion generar puede utilizar una funciona que tenga como entrada la
-     palabra generada y que con ella se realize x actividad. (por defecto la
-     funcion es print, si no se quiere hacer nada cambiar la variable funcion
-     de generar a False)
-  '''
-  print(len(palabra))
-c = Crunch() #Crunch(letras=assci_letters+digits...,remover='')
+# Crunch object
+c = Crunch(letters="(default = ascii_letters + digits + punctuation + whitespace)",
+           remove="The chars to be removed from letters (default None)")
 
-c.generar(tamano_minimo,tamano_maximo,f,almacenar)
-'''Esto crearia palabras con un minimo tamano de 2 y un maximo de 3, imprimiendo
-la longitud de cada palabra generada y no retornaria todas las palabras
-en una lista'''
+# Input of the function always is a tuple for example ('1','1','1','1')
+# Crunch has as default lambda x: None
+# The user function is help full when for example you want to crack a specific
+# user in a SSH connection you can do it with this and you don't need to save
+# a huge file of passwords
+def my_func(word:tuple):
+  print(''.join(word))
+
+# Generate all possible word with range 4, 5, 6 using the letters reference
+c.generate(4, 6, my_func)
+
+```
+## Example
+```python
+from crunch import Crunch
+
+# Chars to be removed
+remove = 'abc'
+
+# Create a Crunch object removing from it's default abc
+c = Crunch(remove=remove)
+
+# print the len of each word
+def my_func(word:tuple):
+  print(len(word))
+
+# run
+c.generate(3, 5, my_func)
+
 ```
